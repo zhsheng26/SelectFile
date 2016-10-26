@@ -3,6 +3,7 @@ package com.wedotech.selectfile;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.widget.FrameLayout;
@@ -41,13 +42,19 @@ public class AlbumView extends FrameLayout {
     }
 
     public void showPhotos(FragmentActivity activity) {
+        //显示加载进度
         Bundle mediaStoreArgs = new Bundle();
         mediaStoreArgs.putBoolean(FilePickerConst.EXTRA_SHOW_GIF, false);
         MediaStoreHelper.getPhotoDirs(activity, mediaStoreArgs, new FileResultCallback<PhotoDirectory>() {
             @Override
             public void onResultCallback(List<PhotoDirectory> files) {
-
+                dealPhotos(files);
             }
         });
+    }
+
+    private void dealPhotos(List<PhotoDirectory> files) {
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new PhotoDirectoryAdapter(files));
     }
 }
