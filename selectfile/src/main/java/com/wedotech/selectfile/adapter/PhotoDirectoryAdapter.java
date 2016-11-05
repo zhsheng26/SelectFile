@@ -7,10 +7,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.wedotech.selectfile.support.ImageLoader;
 import com.wedotech.selectfile.R;
+import com.wedotech.selectfile.models.Photo;
 import com.wedotech.selectfile.models.PhotoDirectory;
+import com.wedotech.selectfile.support.ImageLoader;
+import com.wedotech.selectfile.support.OnSelectDirListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,6 +24,8 @@ public class PhotoDirectoryAdapter extends RecyclerView.Adapter<PhotoDirectoryAd
     private final List<PhotoDirectory> directs;
     private Context context;
     private int sum;
+    private OnSelectDirListener dirListener;
+    private ArrayList<Photo> selectPhotos = new ArrayList<>();
 
     public PhotoDirectoryAdapter(List<PhotoDirectory> directories) {
         this.directs = directories;
@@ -67,7 +72,11 @@ public class PhotoDirectoryAdapter extends RecyclerView.Adapter<PhotoDirectoryAd
         notifyDataSetChanged();
     }
 
-    class DirectoryViewHolder extends RecyclerView.ViewHolder {
+    public void setOnSelectDirListener(OnSelectDirListener dirListener) {
+        this.dirListener = dirListener;
+    }
+
+    class DirectoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         ImageView ivDirectory;
         TextView tvDirectoryName;
@@ -78,6 +87,23 @@ public class PhotoDirectoryAdapter extends RecyclerView.Adapter<PhotoDirectoryAd
             ivDirectory = (ImageView) itemView.findViewById(R.id.iv_directory_cover);
             tvDirectoryName = (TextView) itemView.findViewById(R.id.tv_directory_name);
             tvDirectoryPicCount = (TextView) itemView.findViewById(R.id.tv_directory_pic_count);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (dirListener == null) return;
+            selectPhotos.clear();
+            int position = getAdapterPosition();
+            if (position == 0) {
+                for (PhotoDirectory directory : directs) {
+                    selectPhotos.addAll(directory.getPhotos());
+                }
+            } else {
+                PhotoDirectory photoDirectory = directs.get(position - 1);
+                selectPhotos.addAll(photoDirectory.getPhotos());
+            }
+            dirListener.onSelectDir(selectPhotos);
         }
     }
 }

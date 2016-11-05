@@ -6,12 +6,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import com.wedotech.selectfile.adapter.PhotoDirectoryAdapter;
 import com.wedotech.selectfile.cursors.loadercallbacks.FileResultCallback;
+import com.wedotech.selectfile.models.Photo;
 import com.wedotech.selectfile.models.PhotoDirectory;
 import com.wedotech.selectfile.support.FilePickerConst;
 import com.wedotech.selectfile.support.MediaStoreHelper;
+import com.wedotech.selectfile.support.OnSelectDirListener;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;
@@ -21,7 +24,7 @@ import java.util.List;
  * Created by zhsheng on 2016/10/26.
  */
 
-public class AlbumView extends RecyclerView {
+public class AlbumView extends RecyclerView implements OnSelectDirListener {
 
     private List<PhotoDirectory> directories = new ArrayList<>(50);
     private PhotoDirectoryAdapter directoryAdapter;
@@ -49,6 +52,7 @@ public class AlbumView extends RecyclerView {
         setLayoutManager(new LinearLayoutManager(getContext()));
         directoryAdapter = new PhotoDirectoryAdapter(directories);
         setAdapter(directoryAdapter);
+        directoryAdapter.setOnSelectDirListener(this);
     }
 
     public void showPhotos(FragmentActivity activity) {
@@ -67,5 +71,11 @@ public class AlbumView extends RecyclerView {
         directories.clear();
         directories.addAll(files);
         directoryAdapter.notifyPhotoDataSetChange();
+    }
+
+    @Override
+    public void onSelectDir(List<Photo> photos) {
+        Log.d("AlbumView", String.valueOf(photos.size()));
+
     }
 }
