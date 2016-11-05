@@ -2,9 +2,9 @@ package com.wedotech.selectfile.models;
 
 import android.text.TextUtils;
 
-import com.wedotech.selectfile.FilePickerConst;
+import com.wedotech.selectfile.support.FilePickerConst;
 import com.wedotech.selectfile.R;
-import com.wedotech.selectfile.Utils;
+import com.wedotech.selectfile.support.Utils;
 
 import java.io.File;
 

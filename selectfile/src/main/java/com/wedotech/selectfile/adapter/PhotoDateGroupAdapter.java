@@ -1,4 +1,4 @@
-package com.wedotech.selectfile;
+package com.wedotech.selectfile.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;

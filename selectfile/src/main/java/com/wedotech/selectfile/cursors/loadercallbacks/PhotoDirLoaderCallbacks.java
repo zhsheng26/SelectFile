@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
-import com.wedotech.selectfile.FilePickerConst;
+import com.wedotech.selectfile.support.FilePickerConst;
 import com.wedotech.selectfile.cursors.PhotoDirectoryLoader;
 import com.wedotech.selectfile.models.PhotoDirectory;
 

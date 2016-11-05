@@ -7,8 +7,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 
+import com.wedotech.selectfile.adapter.PhotoDirectoryAdapter;
 import com.wedotech.selectfile.cursors.loadercallbacks.FileResultCallback;
 import com.wedotech.selectfile.models.PhotoDirectory;
+import com.wedotech.selectfile.support.FilePickerConst;
+import com.wedotech.selectfile.support.MediaStoreHelper;
 import com.yqritc.recyclerviewflexibledivider.HorizontalDividerItemDecoration;
 
 import java.util.ArrayList;

@@ -1,7 +1,7 @@
 package com.wedotech.selectfile.models;
 
 
-import com.wedotech.selectfile.Utils;
+import com.wedotech.selectfile.support.Utils;
 
 public class BaseFile {
     protected int id;

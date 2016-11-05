@@ -1,4 +1,4 @@
-package com.wedotech.selectfile;
+package com.wedotech.selectfile.support;
 
 import android.content.Context;
 import android.widget.ImageView;

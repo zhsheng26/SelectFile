@@ -1,4 +1,4 @@
-package com.wedotech.selectfile;
+package com.wedotech.selectfile.support;
 
 public class FilePickerConst {
     public static final int REQUEST_CODE_PHOTO = 233;

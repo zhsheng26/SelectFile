@@ -1,4 +1,4 @@
-package com.wedotech.selectfile;
+package com.wedotech.selectfile.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.wedotech.selectfile.support.ImageLoader;
+import com.wedotech.selectfile.R;
 import com.wedotech.selectfile.models.PhotoDirectory;
 
 import java.util.List;
