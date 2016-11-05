@@ -2,22 +2,27 @@ package com.wedotech.selectfile.models;
 
 import android.text.TextUtils;
 
-import com.wedotech.selectfile.support.FilePickerConst;
 import com.wedotech.selectfile.R;
+import com.wedotech.selectfile.support.FilePickerConst;
 import com.wedotech.selectfile.support.Utils;
 
 import java.io.File;
 
-public class Document extends BaseFile {
+public class Document implements BaseFile {
+    private int id;
+    private String name;
+    private String path;
     private String mimeType;
     private String size;
 
     public Document(int id, String title, String path) {
-        super(id, title, path);
+        this.id = id;
+        this.name = title;
+        this.path = path;
     }
 
     public Document() {
-        super(0, null, null);
+        this(0, null, null);
     }
 
     @Override

@@ -33,4 +33,9 @@ public class Utils {
         }
         return false;
     }
+
+    public boolean isImage(String path) {
+        String[] types = {"jpg", "png", "gif"};
+        return Utils.contains(types, path);
+    }
 }

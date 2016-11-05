@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wedotech.selectfile.R;
+import com.wedotech.selectfile.models.BaseFile;
 import com.wedotech.selectfile.models.Photo;
 import com.wedotech.selectfile.models.PhotoDirectory;
 import com.wedotech.selectfile.support.ImageLoader;
