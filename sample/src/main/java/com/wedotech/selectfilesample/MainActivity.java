@@ -10,6 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.wedotech.selectfile.AlbumView;
+import com.wedotech.selectfile.models.Photo;
+import com.wedotech.selectfile.support.OnSelectDirListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +35,12 @@ public class MainActivity extends AppCompatActivity {
         });
         AlbumView albumView = (AlbumView) findViewById(R.id.albumView);
         albumView.showPhotos(this);
+        albumView.setOnSelectDirListener(new OnSelectDirListener() {
+            @Override
+            public void onSelectDir(List<Photo> photos) {
+                PhotoGridActivity.start(MainActivity.this, (ArrayList<Photo>) photos);
+            }
+        });
     }
 
     @Override

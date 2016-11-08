@@ -28,6 +28,7 @@ public class AlbumView extends RecyclerView implements OnSelectDirListener {
 
     private List<PhotoDirectory> directories = new ArrayList<>(50);
     private PhotoDirectoryAdapter directoryAdapter;
+    private OnSelectDirListener dirListener;
 
     public AlbumView(Context context) {
         super(context);
@@ -73,8 +74,14 @@ public class AlbumView extends RecyclerView implements OnSelectDirListener {
         directoryAdapter.notifyPhotoDataSetChange();
     }
 
+    public void setOnSelectDirListener(OnSelectDirListener dirListener) {
+        this.dirListener = dirListener;
+    }
+
+
     @Override
     public void onSelectDir(List<Photo> photos) {
+        if (dirListener != null) dirListener.onSelectDir(photos);
         Log.d("AlbumView", String.valueOf(photos.size()));
 
     }

@@ -2,6 +2,7 @@
 <resources>
     <declare-styleable name="SelectFile">
         <attr name="themeColor" format="color" />
-        <attr name="groupDate" format="boolean" />
+        <attr name="groupByDate" format="boolean" />
+        <attr name="column" format="integer" />
     </declare-styleable>
 </resources>
