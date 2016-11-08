@@ -70,6 +70,10 @@ public class PhotoDisplayView extends RecyclerView {
         adapter.notifyDataSetChanged();
     }
 
+    public ArrayList<Photo> getSelectedPhotos() {
+        return adapter.getSelectedPhotos();
+    }
+
     public void setOnPhotoSelectedListener(OnPhotoSelectedListener selectedListener) {
         this.selectedListener = selectedListener;
     }
