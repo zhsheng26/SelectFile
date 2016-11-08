@@ -14,4 +14,9 @@
         android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
+    <CheckBox
+        android:id="@+id/cb_sel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right" />
 </com.github.rayboot.widget.ratioview.RatioFrameLayout>

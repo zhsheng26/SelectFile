@@ -27,10 +27,10 @@ public class BaseRecyclerAdapter<T extends BaseFile> extends RecyclerView.Adapte
     private final List<T> mItems;
     private RecyclerView recyclerView;
     private boolean headersShown = false;
-    private StickyHeaderHelper mStickyHeaderHelper;
+    protected StickyHeaderHelper mStickyHeaderHelper;
     private boolean headersSticky = true;
     private Handler mHandler = new Handler(Looper.getMainLooper());
-    private StickyHeaderHelper.OnStickyHeaderChangeListener stickyHeaderChangeListener;
+    public StickyHeaderHelper.OnStickyHeaderChangeListener stickyHeaderChangeListener;
 
     public BaseRecyclerAdapter(@Nullable List<T> items, StickyHeaderHelper.OnStickyHeaderChangeListener stickyHeaderChangeListener) {
         if (items == null) {

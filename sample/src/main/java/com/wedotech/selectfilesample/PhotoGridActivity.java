@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.wedotech.selectfile.PhotoDisplayView;
 import com.wedotech.selectfile.models.Photo;
+import com.wedotech.selectfile.support.OnPhotoSelectedListener;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,12 @@ public class PhotoGridActivity extends AppCompatActivity {
         ArrayList<Photo> photos = getIntent().getParcelableArrayListExtra("photos");
         PhotoDisplayView displayView = (PhotoDisplayView) findViewById(R.id.photos);
         displayView.setupPhotos(photos);
+        displayView.setOnPhotoSelectedListener(new OnPhotoSelectedListener() {
+            @Override
+            public void photoSelected(Photo photo, int selectedCount) {
+
+            }
+        });
 
     }
 }

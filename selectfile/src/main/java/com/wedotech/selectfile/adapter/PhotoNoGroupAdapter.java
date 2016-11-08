@@ -1,48 +1,92 @@
 package com.wedotech.selectfile.adapter;
 
-import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.wedotech.selectfile.R;
-import com.wedotech.selectfile.models.BaseFile;
 import com.wedotech.selectfile.models.Photo;
 import com.wedotech.selectfile.support.ImageLoader;
-import com.wedotech.selectfile.support.StickyHeaderHelper;
 
-import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by zhsheng on 2016/10/26.
  */
 
-public class PhotoNoGroupAdapter extends BaseRecyclerAdapter {
+public class PhotoNoGroupAdapter extends BaseAdapter {
 
-    public PhotoNoGroupAdapter(@Nullable List<Photo> items, StickyHeaderHelper.OnStickyHeaderChangeListener stickyHeaderChangeListener) {
-        super(items, stickyHeaderChangeListener);
+    public PhotoNoGroupAdapter(ArrayList<Photo> photos) {
+        super(photos);
+    }
+
+    public PhotoNoGroupAdapter(ArrayList<Photo> photos, int maxCount) {
+        super(photos, maxCount);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PhotoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = View.inflate(parent.getContext(), R.layout.item_photo, null);
-        return new PhotoViewHolder(itemView, this, false);
+        return new PhotoViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        BaseFile item = getItem(position);
-        PhotoViewHolder photoViewHolder = (PhotoViewHolder) holder;
-        ImageLoader.display(getRecyclerView().getContext(), photoViewHolder.ivPhoto, item.getPath());
+        PhotoViewHolder viewHolder = (PhotoViewHolder) holder;
+        viewHolder.setItemData(photos.get(position));
+
     }
 
-    public class PhotoViewHolder extends PhotoItemViewHolder {
-        ImageView ivPhoto;
+    @Override
+    public int getItemCount() {
+        return photos.size();
+    }
 
-        public PhotoViewHolder(View view, BaseRecyclerAdapter adapter, boolean stickyHeader) {
-            super(view, adapter, stickyHeader);
-            ivPhoto = (ImageView) view.findViewById(R.id.iv_photo);
+
+    class PhotoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        ImageView ivPhoto;
+        CheckBox checkBox;
+        private Photo photoObj;
+
+        PhotoViewHolder(View itemView) {
+            super(itemView);
+            ivPhoto = (ImageView) itemView.findViewById(R.id.iv_photo);
+            checkBox = (CheckBox) itemView.findViewById(R.id.cb_sel);
+            checkBox.setOnClickListener(this);
+        }
+
+        public void setItemData(Photo photo) {
+            this.photoObj = photo;
+            checkBox.setChecked(selectedPhotos.contains(photo));
+            ImageLoader.display(itemView.getContext(), ivPhoto, photoObj.getPath());
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.cb_sel) {
+                boolean isChecked = checkBox.isChecked();
+                if (isChecked && selectedPhotos.size() + 1 > maxCount) {
+                    Toast.makeText(v.getContext(), "最多只能选" + maxCount + "张照片", Toast.LENGTH_SHORT).show();
+                    checkBox.setChecked(false);
+                    return;
+                }
+                if (isChecked) {
+                    selectedPhotos.add(photoObj);
+                } else {
+                    selectedPhotos.remove(photoObj);
+                }
+                if (selectedListener != null) {
+                    selectedListener.photoSelected(photoObj, selectedPhotos.size());
+                }
+
+            } else if (v.getId() == R.id.iv_photo) {
+                //进入大图预览
+            }
         }
     }
+
+
 }
