@@ -47,6 +47,12 @@ public class DateUtil {
         return formatDate(format, timeInMillis);
     }
 
+    public static String formatDatePhoto(long timeInMillis) {
+
+        String format = (isCurrentYear(timeInMillis) ? "MM月dd日" : "yyyy年MM月dd日");
+        return formatDate(format, timeInMillis);
+    }
+
     /**
      * 返回默认格式24小时制日期（"MM-dd kk:mm"） 例子：03-24 18：18
      */

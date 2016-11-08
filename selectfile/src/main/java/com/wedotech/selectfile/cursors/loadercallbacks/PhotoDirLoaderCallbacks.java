@@ -54,7 +54,7 @@ public class PhotoDirLoaderCallbacks implements LoaderManager.LoaderCallbacks<Cu
             PhotoDirectory photoDirectory = new PhotoDirectory();
             photoDirectory.setId(bucketId);
             photoDirectory.setName(name);
-            String formatDate = DateUtil.formatDate("yyyyMMdd", dateToken);
+            String formatDate = DateUtil.formatDatePhoto(dateToken);
             if (!directories.contains(photoDirectory)) {
                 photoDirectory.setCoverPath(path);
                 photoDirectory.addPhoto(imageId, fileName, path, dateToken, formatDate);

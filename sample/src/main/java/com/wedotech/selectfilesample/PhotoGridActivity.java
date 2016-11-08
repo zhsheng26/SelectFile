@@ -25,13 +25,14 @@ public class PhotoGridActivity extends AppCompatActivity {
         setContentView(R.layout.activity_photo_grid);
         ArrayList<Photo> photos = getIntent().getParcelableArrayListExtra("photos");
         PhotoDisplayView displayView = (PhotoDisplayView) findViewById(R.id.photos);
-        displayView.setupPhotos(photos);
+        displayView.showAllPhoto(this);
+        /*displayView.setupPhotos(photos);
         displayView.setOnPhotoSelectedListener(new OnPhotoSelectedListener() {
             @Override
             public void photoSelected(BaseFile photo, int selectedCount) {
 
             }
-        });
+        });*/
 
     }
 }

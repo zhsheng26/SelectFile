@@ -28,6 +28,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.observables.GroupedObservable;
 import rx.schedulers.Schedulers;
 
@@ -111,10 +112,24 @@ public class PhotoDisplayView extends RecyclerView {
                         return photo.getTitle();
                     }
                 })
-                .concatMap(new Func1<GroupedObservable<String, Photo>, Observable<List<Photo>>>() {
+                .flatMap(new Func1<GroupedObservable<String, Photo>, Observable<List<Photo>>>() {
                     @Override
                     public Observable<List<Photo>> call(GroupedObservable<String, Photo> longPhotoGroupedObservable) {
                         return longPhotoGroupedObservable.toList();
+                    }
+                })
+                .sorted(new Func2<List<Photo>, List<Photo>, Integer>() {
+                    @Override
+                    public Integer call(List<Photo> photos, List<Photo> photos2) {
+                        Photo photo = photos.get(0);
+                        Photo photo1 = photos2.get(0);
+                        if (photo1.getDateTaken() > photo.getDateTaken()) {
+                            return 1;
+                        } else if (photo1.getDateTaken() == photo.getDateTaken()) {
+                            return 0;
+                        } else {
+                            return -1;
+                        }
                     }
                 })
                 .map(new Func1<List<Photo>, List<BaseFile>>() {
