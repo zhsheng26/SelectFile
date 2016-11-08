@@ -4,20 +4,31 @@ package com.wedotech.selectfile.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.wedotech.selectfile.support.FilePickerConst;
+
 public class Photo implements BaseFile, Parcelable {
     private int id;
     private String name;
     private String path;
+    private long dateTaken;
+    private String title;
 
-    public Photo(int id, String name, String path) {
+    public long getDateTaken() {
+        return dateTaken;
+    }
+
+    public void setDateTaken(long dateTaken) {
+        this.dateTaken = dateTaken;
+    }
+
+    public Photo(int id, String name, String path, long dateTaken, String title) {
         this.id = id;
         this.name = name;
         this.path = path;
+        this.dateTaken = dateTaken;
+        this.title = title;
     }
 
-    public Photo() {
-        this(0, null, null);
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -34,14 +45,22 @@ public class Photo implements BaseFile, Parcelable {
         return id;
     }
 
-    @Override
     public void setId(int id) {
         this.id = id;
     }
 
-    @Override
     public int getId() {
         return id;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
     }
 
     @Override
@@ -49,9 +68,13 @@ public class Photo implements BaseFile, Parcelable {
         return path;
     }
 
-    @Override
     public void setPath(String path) {
         this.path = path;
+    }
+
+    @Override
+    public int getType() {
+        return FilePickerConst.PHOTO_PICKER;
     }
 
     public String getName() {
@@ -72,12 +95,16 @@ public class Photo implements BaseFile, Parcelable {
         dest.writeInt(this.id);
         dest.writeString(this.name);
         dest.writeString(this.path);
+        dest.writeLong(this.dateTaken);
+        dest.writeString(this.title);
     }
 
     protected Photo(Parcel in) {
         this.id = in.readInt();
         this.name = in.readString();
         this.path = in.readString();
+        this.dateTaken = in.readLong();
+        this.title = in.readString();
     }
 
     public static final Parcelable.Creator<Photo> CREATOR = new Parcelable.Creator<Photo>() {

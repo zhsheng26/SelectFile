@@ -28,7 +28,7 @@ import android.view.ViewParent;
 
 import com.wedotech.selectfile.adapter.BaseRecyclerAdapter;
 import com.wedotech.selectfile.adapter.PhotoItemViewHolder;
-import com.wedotech.selectfile.models.IHeader;
+import com.wedotech.selectfile.models.HeaderTitle;
 
 public class StickyHeaderHelper extends OnScrollListener {
 
@@ -263,7 +263,7 @@ public class StickyHeaderHelper extends OnScrollListener {
                 return RecyclerView.NO_POSITION;
             }
         }
-        IHeader header = mAdapter.getSectionHeader(adapterPosHere);
+        HeaderTitle header = mAdapter.getSectionHeader(adapterPosHere);
         //Header cannot be sticky if it's also an Expandable in collapsed status, RV will raise an exception
         if (header == null) {
             return RecyclerView.NO_POSITION;

@@ -3,13 +3,11 @@ package com.wedotech.selectfile.models;
 
 public interface BaseFile {
 
-    void setId(int id);
+    void setTitle(String title);
 
-    int getId();
+    String getTitle();
+
+    int getType();
 
     String getPath();
-
-    void setPath(String path);
-
-
 }

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.wedotech.selectfile.R;
 import com.wedotech.selectfile.models.BaseFile;
-import com.wedotech.selectfile.models.IHeader;
+import com.wedotech.selectfile.models.HeaderTitle;
 import com.wedotech.selectfile.support.StickyHeaderHelper;
 import com.wedotech.selectfile.support.Utils;
 
@@ -144,20 +144,20 @@ public class BaseRecyclerAdapter<T extends BaseFile> extends RecyclerView.Adapte
     }
 
     /**
-     * Retrieves the {@link IHeader} item of any specified position.
+     * Retrieves the {@link HeaderTitle} item of any specified position.
      *
      * @param position the item position
-     * @return the IHeader item linked to the specified item position
+     * @return the HeaderTitle item linked to the specified item position
      * @since 5.0.0-b6
      */
     //TODO: rename to getSectionByItemPosition?
-    public IHeader getSectionHeader(@IntRange(from = 0) int position) {
+    public HeaderTitle getSectionHeader(@IntRange(from = 0) int position) {
         //Headers are not visible nor sticky
         if (!headersShown) return null;
         //When headers are visible and sticky, get the previous header
         for (int i = position; i >= 0; i--) {
             T item = getItem(i);
-            if (isHeader(item)) return (IHeader) item;
+            if (isHeader(item)) return (HeaderTitle) item;
         }
         return null;
     }
@@ -174,17 +174,17 @@ public class BaseRecyclerAdapter<T extends BaseFile> extends RecyclerView.Adapte
      * @since 5.0.0-b6
      */
     @NonNull
-    public List<IHeader> getHeaderItems() {
-        List<IHeader> headers = new ArrayList<>();
+    public List<HeaderTitle> getHeaderItems() {
+        List<HeaderTitle> headers = new ArrayList<>();
         for (T item : mItems) {
             if (isHeader(item))
-                headers.add((IHeader) item);
+                headers.add((HeaderTitle) item);
         }
         return headers;
     }
 
     public boolean isHeader(T item) {
-        return item != null && item instanceof IHeader;
+        return item != null && item instanceof HeaderTitle;
     }
 
 }

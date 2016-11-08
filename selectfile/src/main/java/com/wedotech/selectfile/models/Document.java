@@ -76,6 +76,11 @@ public class Document implements BaseFile {
         return new File(this.path).getName();
     }
 
+    @Override
+    public int getType() {
+        return FilePickerConst.DOC_PICKER;
+    }
+
     public void setTitle(String title) {
         this.name = title;
     }
