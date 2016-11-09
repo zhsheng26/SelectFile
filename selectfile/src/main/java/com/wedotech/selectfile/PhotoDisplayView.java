@@ -39,7 +39,7 @@ import rx.schedulers.Schedulers;
 public class PhotoDisplayView extends RecyclerView {
 
     private int column = 4;
-    private boolean groupByDate = true;
+    private boolean groupByDate = false;
     private BaseAdapter adapter;
     private ArrayList<BaseFile> photoList;
     private OnPhotoSelectedListener selectedListener;
@@ -56,7 +56,7 @@ public class PhotoDisplayView extends RecyclerView {
     public PhotoDisplayView(Context context, @Nullable AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.SelectFile, defStyle, 0);
-        groupByDate = typedArray.getBoolean(R.styleable.SelectFile_groupByDate, true);
+        groupByDate = typedArray.getBoolean(R.styleable.SelectFile_groupByDate, false);
         column = typedArray.getInteger(R.styleable.SelectFile_column, 4);
         typedArray.recycle();
         setupView();
