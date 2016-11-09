@@ -61,36 +61,14 @@ public class Utils {
     public static final int INVALID_COLOR = -1;
     public static int colorAccent = INVALID_COLOR;
 
-    /**
-     * API 21
-     *
-     * @see Build.VERSION_CODES#LOLLIPOP
-     */
     public static boolean hasLollipop() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
-    /**
-     * API 16
-     *
-     * @see Build.VERSION_CODES#JELLY_BEAN
-     */
     public static boolean hasJellyBean() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN;
     }
 
-    /**
-     * Sets a spannable text with the accent color (if available) into the provided TextView.
-     * <p>Internally calls {@link #fetchAccentColor(Context, int)}.</p>
-     *
-     * @param context      context
-     * @param textView     the TextView to transform
-     * @param originalText the original text which the transformation is applied to
-     * @param constraint   the text to highlight
-     * @param defColor     the default color in case accentColor is not found
-     * @see #fetchAccentColor(Context, int)
-     */
-    //TODO: Deprecate defColor?
     public static void highlightText(@NonNull Context context, @NonNull TextView textView,
                                      String originalText, String constraint, @ColorInt int defColor) {
         if (originalText == null) originalText = "";
@@ -108,22 +86,11 @@ public class Utils {
         }
     }
 
-    /**
-     * Reset the internal accent color to {@link #INVALID_COLOR}, to give the possibility
-     * to re-fetch it at runtime, since once it is fetched it cannot be changed.
-     */
+
     public static void resetAccentColor() {
         colorAccent = INVALID_COLOR;
     }
 
-    /**
-     * Optimized method to fetch the accent color on devices with at least Lollipop.
-     * <p>If accent color has been already fetched it is simply returned.</p>
-     *
-     * @param context  context
-     * @param defColor value to return if the accentColor cannot be found
-     */
-    //TODO: Deprecate defColor and use R.attr.colorAccent?
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public static int fetchAccentColor(Context context, @ColorInt int defColor) {
         if (colorAccent == INVALID_COLOR) {
@@ -138,24 +105,12 @@ public class Utils {
         return colorAccent;
     }
 
-    /**
-     * Finds the layout orientation of the RecyclerView.
-     *
-     * @param recyclerView the RV instance
-     * @return one of {@link OrientationHelper#HORIZONTAL}, {@link OrientationHelper#VERTICAL}
-     * @deprecated Use {@link #getOrientation(RecyclerView.LayoutManager)} instead
-     */
+
     @Deprecated
     public static int getOrientation(RecyclerView recyclerView) {
         return getOrientation(recyclerView.getLayoutManager());
     }
 
-    /**
-     * Finds the layout orientation of the RecyclerView, no matter which LayoutManager is in use.
-     *
-     * @param layoutManager the LayoutManager instance in use by the RV
-     * @return one of {@link OrientationHelper#HORIZONTAL}, {@link OrientationHelper#VERTICAL}
-     */
     public static int getOrientation(RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof LinearLayoutManager) {
             return ((LinearLayoutManager) layoutManager).getOrientation();
@@ -165,16 +120,6 @@ public class Utils {
         return OrientationHelper.HORIZONTAL;
     }
 
-    /**
-     * Helper method to find the adapter position of the First completely visible view [for each
-     * span], no matter which Layout is.
-     *
-     * @param layoutManager the layout manager in use
-     * @return the adapter position of the first fully visible item or {@code RecyclerView.NO_POSITION}
-     * if there aren't any visible items.
-     * @see #findLastCompletelyVisibleItemPosition(RecyclerView.LayoutManager)
-     * @since 5.0.0-b8
-     */
     public static int findFirstCompletelyVisibleItemPosition(RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof StaggeredGridLayoutManager) {
             return ((StaggeredGridLayoutManager) layoutManager).findFirstCompletelyVisibleItemPositions(null)[0];
@@ -183,16 +128,6 @@ public class Utils {
         }
     }
 
-    /**
-     * Helper method to find the adapter position of the Last completely visible view [for each
-     * span], no matter which Layout is.
-     *
-     * @param layoutManager the layout manager in use
-     * @return the adapter position of the last fully visible item or {@code RecyclerView.NO_POSITION}
-     * if there aren't any visible items.
-     * @see #findFirstCompletelyVisibleItemPosition(RecyclerView.LayoutManager)
-     * @since 5.0.0-b8
-     */
     public static int findLastCompletelyVisibleItemPosition(RecyclerView.LayoutManager layoutManager) {
         if (layoutManager instanceof StaggeredGridLayoutManager) {
             return ((StaggeredGridLayoutManager) layoutManager).findLastCompletelyVisibleItemPositions(null)[0];
@@ -201,16 +136,11 @@ public class Utils {
         }
     }
 
-    /**
-     * Resolves bug #161. Necessary when {@code theme} attribute is used in the layout.
-     * Used by {@code FlexibleAdapter.getStickySectionHeadersHolder()} method.
-     */
     public static Activity scanForActivity(Context context) {
         if (context instanceof Activity)
             return (Activity) context;
         else if (context instanceof ContextWrapper)
             return scanForActivity(((ContextWrapper) context).getBaseContext());
-
         return null;
     }
 }

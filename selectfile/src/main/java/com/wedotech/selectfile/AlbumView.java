@@ -57,7 +57,6 @@ public class AlbumView extends RecyclerView implements OnSelectDirListener {
     }
 
     public void showPhotos(FragmentActivity activity) {
-        //显示加载进度
         Bundle mediaStoreArgs = new Bundle();
         mediaStoreArgs.putBoolean(FilePickerConst.EXTRA_SHOW_GIF, false);
         MediaStoreHelper.getPhotoDirs(activity, mediaStoreArgs, new FileResultCallback<PhotoDirectory>() {
@@ -82,7 +81,5 @@ public class AlbumView extends RecyclerView implements OnSelectDirListener {
     @Override
     public void onSelectDir(List<Photo> photos) {
         if (dirListener != null) dirListener.onSelectDir(photos);
-        Log.d("AlbumView", String.valueOf(photos.size()));
-
     }
 }

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'com.novoda.bintray-release'
 android {
     compileSdkVersion 24
     buildToolsVersion "24.0.2"
@@ -34,4 +34,12 @@ dependencies {
     compile "com.github.bumptech.glide:glide:3.8.0-SNAPSHOT"
     compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
     compile 'com.github.rayboot.widget:ratioview:1.0.1'
+}
+publish {
+    userOrg = 'zhsheng26'
+    groupId = 'com.wedotech'
+    artifactId = 'selectfile'
+    publishVersion = '0.1.0'
+    desc = 'slect file in android'
+    website = 'https://github.com/zhsheng26/SelectFile'
 }

@@ -14,6 +14,7 @@ public class DateUtil {
     public final static String YYYYMMDD_P = "yyyy.MM.dd";
 
     /**
+     * @param timeInMillis
      * @return yyyy年MM月dd日
      */
     public static String getDate(long timeInMillis) {
@@ -23,6 +24,7 @@ public class DateUtil {
     }
 
     /**
+     * @param timeInMillis
      * @return yyyy年MM月
      */
     public static String getYearMonthDate(long timeInMillis) {
@@ -31,6 +33,7 @@ public class DateUtil {
     }
 
     /**
+     * @param timeInMillis
      * @return yyyy年
      */
     public static String getYearDate(long timeInMillis) {
@@ -39,6 +42,7 @@ public class DateUtil {
     }
 
     /**
+     * @param timeInMillis
      * @return kk点mm分
      */
     public static String getTime(long timeInMillis) {
@@ -54,7 +58,8 @@ public class DateUtil {
     }
 
     /**
-     * 返回默认格式24小时制日期（"MM-dd kk:mm"） 例子：03-24 18：18
+     * @param timeInMillis 返回默认格式24小时制日期（"MM-dd kk:mm"） 例子：03-24 18：18
+     * @return
      */
     public static String formatDate(long timeInMillis) {
 
@@ -62,9 +67,6 @@ public class DateUtil {
         return formatDate(format, timeInMillis);
     }
 
-    /**
-     * 判断当前年
-     */
     public static boolean isCurrentYear(long timeMillis) {
         String year = formatDate("yyyy", timeMillis);
         String currentY = formatDate("yyyy", System.currentTimeMillis());
@@ -82,6 +84,9 @@ public class DateUtil {
 
     /**
      * 返回默认格式24小时制日期（"MM月dd日 kk:mm"） 例子：03月24日 18:18
+     *
+     * @param timeInMillis
+     * @return
      */
     public static String formatDateByZH(long timeInMillis) {
         String format = "MM月dd日 kk:mm";
@@ -93,6 +98,7 @@ public class DateUtil {
      * 返回自定义格式化日期
      *
      * @param format {@link java.text.SimpleDateFormat}
+     * @return
      */
     public static String formatDate(String format, long timeInMillis) {
         Calendar dealTime = Calendar.getInstance();
@@ -102,6 +108,8 @@ public class DateUtil {
 
     /**
      * 返回当前时间的默认格式24小时制日期（"MM-dd kk:mm"） 例子：03-24 18：18
+     *
+     * @return
      */
     public static String getFormattedDate() {
         return formatDate(System.currentTimeMillis());
@@ -111,12 +119,14 @@ public class DateUtil {
      * 返回当前时间的自定义格式化时间
      *
      * @param format {@link java.text.SimpleDateFormat}
+     * @return
      */
     public static String getFormattedDate(String format) {
         return formatDate(format, System.currentTimeMillis());
     }
 
     /**
+     * @param timeInMillis
      * @return xx天前/xx小时前/xx分钟前/刚刚
      */
     public static String getDisTime(long timeInMillis) {
