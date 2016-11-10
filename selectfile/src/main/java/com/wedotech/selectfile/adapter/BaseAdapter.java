@@ -2,7 +2,7 @@ package com.wedotech.selectfile.adapter;
 
 import android.support.v7.widget.RecyclerView;
 
-import com.wedotech.selectfile.models.BaseFile;
+import com.wedotech.selectfile.models.Photo;
 import com.wedotech.selectfile.support.OnPhotoSelectedListener;
 
 import java.util.ArrayList;
@@ -13,16 +13,16 @@ import java.util.ArrayList;
 
 public abstract class BaseAdapter extends RecyclerView.Adapter {
 
-    protected ArrayList<BaseFile> photos;
+    protected ArrayList<Photo> photos;
     int maxCount;
     OnPhotoSelectedListener selectedListener;
-    ArrayList<BaseFile> selectedPhotos = new ArrayList<>(9);
+    ArrayList<Photo> selectedPhotos = new ArrayList<>(9);
 
-    BaseAdapter(ArrayList<BaseFile> photos) {
+    BaseAdapter(ArrayList<Photo> photos) {
         this(photos, 9);
     }
 
-    BaseAdapter(ArrayList<BaseFile> photos, int maxCount) {
+    BaseAdapter(ArrayList<Photo> photos, int maxCount) {
         if (photos == null) {
             this.photos = new ArrayList<>();
         } else {
@@ -35,7 +35,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter {
         this.maxCount = maxCount;
     }
 
-    public ArrayList<BaseFile> getSelectedPhotos() {
+    public ArrayList<Photo> getSelectedPhotos() {
         return selectedPhotos;
     }
 

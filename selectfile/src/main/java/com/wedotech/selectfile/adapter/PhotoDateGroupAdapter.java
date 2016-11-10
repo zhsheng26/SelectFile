@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.wedotech.selectfile.R;
 import com.wedotech.selectfile.models.BaseFile;
+import com.wedotech.selectfile.models.Photo;
 import com.wedotech.selectfile.support.FilePickerConst;
 import com.wedotech.selectfile.support.ImageLoader;
 
@@ -23,11 +24,11 @@ import java.util.List;
 public class PhotoDateGroupAdapter extends BaseAdapter {
     private ArrayList<String> selectedGroup = new ArrayList<>(10);
 
-    public PhotoDateGroupAdapter(ArrayList<BaseFile> photos) {
+    public PhotoDateGroupAdapter(ArrayList<Photo> photos) {
         super(photos);
     }
 
-    public PhotoDateGroupAdapter(ArrayList<BaseFile> photos, int maxCount) {
+    public PhotoDateGroupAdapter(ArrayList<Photo> photos, int maxCount) {
         super(photos, maxCount);
     }
 
@@ -43,7 +44,7 @@ public class PhotoDateGroupAdapter extends BaseAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         int itemViewType = getItemViewType(position);
-        BaseFile baseFile = photos.get(position);
+        Photo baseFile = photos.get(position);
         if (itemViewType == FilePickerConst.PHOTO_PICKER) {
             PhotoViewHolder photoViewHolder = (PhotoViewHolder) holder;
             photoViewHolder.setItemData(baseFile);
@@ -68,7 +69,7 @@ public class PhotoDateGroupAdapter extends BaseAdapter {
 
         ImageView ivPhoto;
         CheckBox checkBox;
-        private BaseFile photoObj;
+        private Photo photoObj;
 
         public PhotoViewHolder(View itemView) {
             super(itemView);
@@ -77,7 +78,7 @@ public class PhotoDateGroupAdapter extends BaseAdapter {
             checkBox.setOnClickListener(this);
         }
 
-        public void setItemData(BaseFile photo) {
+        public void setItemData(Photo photo) {
             this.photoObj = photo;
             checkBox.setChecked(selectedPhotos.contains(photo));
             ImageLoader.display(itemView.getContext(), ivPhoto, photoObj.getPath());
@@ -103,7 +104,7 @@ public class PhotoDateGroupAdapter extends BaseAdapter {
             int focusPosition = getAdapterPosition();
             //找到所在组的group
             int headerPosition = findHeaderByFocusPosition(focusPosition);
-            List<BaseFile> files = findGroupPhotoByHeaderPosition(headerPosition);
+            List<Photo> files = findGroupPhotoByHeaderPosition(headerPosition);
             if (selectedPhotos.containsAll(files)) {
                 selectedGroup.add(String.valueOf(headerPosition));
             } else {
@@ -128,7 +129,7 @@ public class PhotoDateGroupAdapter extends BaseAdapter {
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            List<BaseFile> groupPhotos = findGroupPhotoByHeaderPosition(position);
+            List<Photo> groupPhotos = findGroupPhotoByHeaderPosition(position);
             int size = groupPhotos.size();
             TextView textView = (TextView) v;
             String txt = textView.getText().toString();
@@ -162,10 +163,10 @@ public class PhotoDateGroupAdapter extends BaseAdapter {
         return firstIndex;
     }
 
-    private List<BaseFile> findGroupPhotoByHeaderPosition(int headerPosition) {
-        ArrayList<BaseFile> baseFiles = new ArrayList<>();
+    private List<Photo> findGroupPhotoByHeaderPosition(int headerPosition) {
+        ArrayList<Photo> baseFiles = new ArrayList<>();
         for (int i = headerPosition + 1; i < photos.size(); i++) {
-            BaseFile baseFile = photos.get(i);
+            Photo baseFile = photos.get(i);
             if (baseFile.getType() == FilePickerConst.PHOTO_PICKER) {
                 baseFiles.add(baseFile);
             } else {

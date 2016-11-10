@@ -39,7 +39,7 @@ publish {
     userOrg = 'zhsheng26'
     groupId = 'com.wedotech'
     artifactId = 'selectfile'
-    publishVersion = '0.1.1'
+    publishVersion = '0.1.2'
     desc = 'slect file in android'
     website = 'https://github.com/zhsheng26/SelectFile'
 }

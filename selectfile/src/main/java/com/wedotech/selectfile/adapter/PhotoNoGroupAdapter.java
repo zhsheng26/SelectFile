@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.wedotech.selectfile.R;
-import com.wedotech.selectfile.models.BaseFile;
 import com.wedotech.selectfile.models.Photo;
 import com.wedotech.selectfile.support.ImageLoader;
 
@@ -20,11 +19,11 @@ import java.util.ArrayList;
 
 public class PhotoNoGroupAdapter extends BaseAdapter {
 
-    public PhotoNoGroupAdapter(ArrayList<BaseFile> photos) {
+    public PhotoNoGroupAdapter(ArrayList<Photo> photos) {
         super(photos);
     }
 
-    public PhotoNoGroupAdapter(ArrayList<BaseFile> photos, int maxCount) {
+    public PhotoNoGroupAdapter(ArrayList<Photo> photos, int maxCount) {
         super(photos, maxCount);
     }
 
@@ -50,7 +49,7 @@ public class PhotoNoGroupAdapter extends BaseAdapter {
     private class PhotoViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView ivPhoto;
         CheckBox checkBox;
-        private BaseFile photoObj;
+        private Photo photoObj;
 
         PhotoViewHolder(View itemView) {
             super(itemView);
@@ -59,7 +58,7 @@ public class PhotoNoGroupAdapter extends BaseAdapter {
             checkBox.setOnClickListener(this);
         }
 
-        public void setItemData(BaseFile photo) {
+        public void setItemData(Photo photo) {
             this.photoObj = photo;
             checkBox.setChecked(selectedPhotos.contains(photo));
             ImageLoader.display(itemView.getContext(), ivPhoto, photoObj.getPath());

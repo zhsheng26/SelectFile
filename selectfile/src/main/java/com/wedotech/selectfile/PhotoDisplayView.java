@@ -14,7 +14,6 @@ import com.wedotech.selectfile.adapter.PhotoDateGroupAdapter;
 import com.wedotech.selectfile.adapter.PhotoNoGroupAdapter;
 import com.wedotech.selectfile.cursors.loadercallbacks.FileResultCallback;
 import com.wedotech.selectfile.models.BaseFile;
-import com.wedotech.selectfile.models.HeaderTitle;
 import com.wedotech.selectfile.models.Photo;
 import com.wedotech.selectfile.models.PhotoDirectory;
 import com.wedotech.selectfile.support.FilePickerConst;
@@ -42,7 +41,7 @@ public class PhotoDisplayView extends RecyclerView {
     private int column = 4;
     private boolean groupByDate = false;
     private BaseAdapter adapter;
-    private ArrayList<BaseFile> photoList;
+    private ArrayList<Photo> photoList;
     private OnPhotoSelectedListener selectedListener;
     private Subscription subscribe;
 
@@ -138,19 +137,19 @@ public class PhotoDisplayView extends RecyclerView {
                         }
                     }
                 })
-                .map(new Func1<List<Photo>, List<BaseFile>>() {
+                .map(new Func1<List<Photo>, List<Photo>>() {
                     @Override
-                    public List<BaseFile> call(List<Photo> photos) {
-                        photoList.add(new HeaderTitle(photos.get(0).getTitle()));
+                    public List<Photo> call(List<Photo> photos) {
+                        photoList.add(new Photo(photos.get(0).getTitle()));
                         photoList.addAll(photos);
                         return photoList;
                     }
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<BaseFile>>() {
+                .subscribe(new Action1<List<Photo>>() {
                     @Override
-                    public void call(List<BaseFile> baseFiles) {
+                    public void call(List<Photo> baseFiles) {
                         adapter.notifyDataSetChanged();
                     }
                 });
@@ -177,7 +176,7 @@ public class PhotoDisplayView extends RecyclerView {
         }
     }
 
-    public ArrayList<BaseFile> getSelectedPhotos() {
+    public ArrayList<Photo> getSelectedPhotos() {
         return adapter.getSelectedPhotos();
     }
 
