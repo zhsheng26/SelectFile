@@ -22,6 +22,6 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support:design:25.0.0'
-    compile 'com.wedotech:selectfile:0.1.2'
+    compile 'com.wedotech:selectfile:0.1.3'
     testCompile 'junit:junit:4.12'
 }

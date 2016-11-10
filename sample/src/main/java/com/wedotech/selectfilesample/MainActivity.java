@@ -1,5 +1,6 @@
 package com.wedotech.selectfilesample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,7 +14,6 @@ import com.wedotech.selectfile.AlbumView;
 import com.wedotech.selectfile.models.Photo;
 import com.wedotech.selectfile.support.OnSelectDirListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         albumView.setOnSelectDirListener(new OnSelectDirListener() {
             @Override
             public void onSelectDir(List<Photo> photos) {
-                PhotoGridActivity.start(MainActivity.this, (ArrayList<Photo>) photos);
+                startActivity(new Intent(MainActivity.this, ScissorActivity.class));
             }
         });
     }
