@@ -1,5 +1,6 @@
 package com.wedotech.selectfile.models;
 
+import android.os.Parcel;
 import android.text.TextUtils;
 
 import com.wedotech.selectfile.R;
@@ -8,16 +9,14 @@ import com.wedotech.selectfile.support.Utils;
 
 import java.io.File;
 
-public class Document implements BaseFile {
-    private int id;
+public class Document extends BaseFile {
     private String name;
-    private String path;
     private String mimeType;
     private String size;
 
-    public Document(int id, String title, String path) {
+    public Document(int id, String name, String path) {
         this.id = id;
-        this.name = title;
+        this.name = name;
         this.path = path;
     }
 
@@ -151,4 +150,35 @@ public class Document implements BaseFile {
         return Utils.contains(types, this.path);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.name);
+        dest.writeString(this.mimeType);
+        dest.writeString(this.size);
+    }
+
+    protected Document(Parcel in) {
+        super(in);
+        this.name = in.readString();
+        this.mimeType = in.readString();
+        this.size = in.readString();
+    }
+
+    public static final Creator<Document> CREATOR = new Creator<Document>() {
+        @Override
+        public Document createFromParcel(Parcel source) {
+            return new Document(source);
+        }
+
+        @Override
+        public Document[] newArray(int size) {
+            return new Document[size];
+        }
+    };
 }

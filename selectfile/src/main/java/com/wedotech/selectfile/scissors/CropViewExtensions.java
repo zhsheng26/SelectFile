@@ -162,7 +162,7 @@ class CropViewExtensions {
         /**
          * Asynchronously flush cropped bitmap into provided stream.
          *
-         * @param outputStream Stream to write to
+         * @param outputStream  Stream to write to
          * @param closeWhenDone wetter or not to close provided stream once flushing is done
          * @return {@link Future} used to cancel or wait for this request.
          */
@@ -172,9 +172,7 @@ class CropViewExtensions {
         }
     }
 
-    final static boolean HAS_PICASSO = canHasClass("com.squareup.picasso.Picasso");
     final static boolean HAS_GLIDE = canHasClass("com.bumptech.glide.Glide");
-    final static boolean HAS_UIL = canHasClass("com.nostra13.universalimageloader.core.ImageLoader");
 
     static BitmapLoader resolveBitmapLoader(CropView cropView) {
         if (HAS_GLIDE) {

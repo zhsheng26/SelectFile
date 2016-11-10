@@ -65,15 +65,4 @@ public class BaseFile implements Parcelable {
         this.type = in.readInt();
     }
 
-    public static final Creator<BaseFile> CREATOR = new Creator<BaseFile>() {
-        @Override
-        public BaseFile createFromParcel(Parcel source) {
-            return new BaseFile(source);
-        }
-
-        @Override
-        public BaseFile[] newArray(int size) {
-            return new BaseFile[size];
-        }
-    };
 }
