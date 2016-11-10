@@ -5,10 +5,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Rect;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -16,14 +21,21 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.android.internal.util.Predicate;
+import com.wedotech.selectfile.BuildConfig;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class Utils {
 
@@ -142,5 +154,93 @@ public class Utils {
         else if (context instanceof ContextWrapper)
             return scanForActivity(((ContextWrapper) context).getBaseContext());
         return null;
+    }
+
+    public static void checkArg(boolean expression, String msg) {
+        if (!expression) {
+            throw new IllegalArgumentException(msg);
+        }
+    }
+
+    public static void checkNotNull(Object object, String msg) {
+        if (object == null) {
+            throw new NullPointerException(msg);
+        }
+    }
+
+    public static Bitmap asBitmap(Drawable drawable, int minWidth, int minHeight) {
+        final Rect tmpRect = new Rect();
+        drawable.copyBounds(tmpRect);
+        if (tmpRect.isEmpty()) {
+            tmpRect.set(0, 0, Math.max(minWidth, drawable.getIntrinsicWidth()), Math.max(minHeight, drawable.getIntrinsicHeight()));
+            drawable.setBounds(tmpRect);
+        }
+        Bitmap bitmap = Bitmap.createBitmap(tmpRect.width(), tmpRect.height(), Bitmap.Config.ARGB_8888);
+        drawable.draw(new Canvas(bitmap));
+        return bitmap;
+    }
+
+    private final static ExecutorService EXECUTOR_SERVICE = Executors.newCachedThreadPool();
+    private static final String TAG = "scissors.Utils";
+
+    public static Future<Void> flushToFile(final Bitmap bitmap,
+                                           final Bitmap.CompressFormat format,
+                                           final int quality,
+                                           final File file) {
+
+        return EXECUTOR_SERVICE.submit(new Runnable() {
+            @Override
+            public void run() {
+                OutputStream outputStream = null;
+
+                try {
+                    file.getParentFile().mkdirs();
+                    outputStream = new FileOutputStream(file);
+                    bitmap.compress(format, quality, outputStream);
+                    outputStream.flush();
+                } catch (final Throwable throwable) {
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "Error attempting to save bitmap.", throwable);
+                    }
+                } finally {
+                    closeQuietly(outputStream);
+                }
+            }
+        }, null);
+    }
+
+    public static Future<Void> flushToStream(final Bitmap bitmap,
+                                             final Bitmap.CompressFormat format,
+                                             final int quality,
+                                             final OutputStream outputStream,
+                                             final boolean closeWhenDone) {
+
+        return EXECUTOR_SERVICE.submit(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    bitmap.compress(format, quality, outputStream);
+                    outputStream.flush();
+                } catch (final Throwable throwable) {
+                    if (BuildConfig.DEBUG) {
+                        Log.e(TAG, "Error attempting to save bitmap.", throwable);
+                    }
+                } finally {
+                    if (closeWhenDone) {
+                        closeQuietly(outputStream);
+                    }
+                }
+            }
+        }, null);
+    }
+
+    private static void closeQuietly(@Nullable OutputStream outputStream) {
+        try {
+            if (outputStream != null) {
+                outputStream.close();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error attempting to close stream.", e);
+        }
     }
 }
