@@ -319,6 +319,7 @@ public class CropView extends ImageView {
          * Load a {@link Bitmap} using given {@link BitmapLoader}, you must call {@link CropViewExtensions.LoadRequest#load(Object)} afterwards.
          *
          * @param bitmapLoader {@link BitmapLoader} used to load desired {@link Bitmap}
+         * @return CropViewExtensions.LoadRequest
          * @see GlideBitmapLoader
          */
         public CropViewExtensions.LoadRequest using(@Nullable BitmapLoader bitmapLoader) {
@@ -340,6 +341,9 @@ public class CropView extends ImageView {
 
         /**
          * Perform a pick image request using {@link Activity#startActivityForResult(Intent, int)}.
+         *
+         * @param activity
+         * @param requestCode
          */
         public void pickUsing(@NonNull Activity activity, int requestCode) {
             CropViewExtensions.pickUsing(activity, requestCode);
@@ -347,6 +351,9 @@ public class CropView extends ImageView {
 
         /**
          * Perform a pick image request using {@link Fragment#startActivityForResult(Intent, int)}.
+         *
+         * @param fragment
+         * @param requestCode
          */
         public void pickUsing(@NonNull Fragment fragment, int requestCode) {
             CropViewExtensions.pickUsing(fragment, requestCode);
