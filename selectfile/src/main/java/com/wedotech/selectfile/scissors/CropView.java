@@ -342,8 +342,8 @@ public class CropView extends ImageView {
         /**
          * Perform a pick image request using {@link Activity#startActivityForResult(Intent, int)}.
          *
-         * @param activity
-         * @param requestCode
+         * @param activity activity
+         * @param requestCode requestCode
          */
         public void pickUsing(@NonNull Activity activity, int requestCode) {
             CropViewExtensions.pickUsing(activity, requestCode);
@@ -352,8 +352,8 @@ public class CropView extends ImageView {
         /**
          * Perform a pick image request using {@link Fragment#startActivityForResult(Intent, int)}.
          *
-         * @param fragment
-         * @param requestCode
+         * @param fragment fragment
+         * @param requestCode requestCode
          */
         public void pickUsing(@NonNull Fragment fragment, int requestCode) {
             CropViewExtensions.pickUsing(fragment, requestCode);

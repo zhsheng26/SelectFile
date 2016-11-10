@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
@@ -43,6 +44,7 @@ public class PhotoDisplayView extends RecyclerView {
     private BaseAdapter adapter;
     private ArrayList<BaseFile> photoList;
     private OnPhotoSelectedListener selectedListener;
+    private Subscription subscribe;
 
     public PhotoDisplayView(Context context) {
         super(context);
@@ -89,6 +91,10 @@ public class PhotoDisplayView extends RecyclerView {
         setAdapter(adapter);
     }
 
+    public void setMaxCount(int maxCount) {
+        if (adapter != null) adapter.setMaxCount(maxCount);
+    }
+
     public void showAllPhoto(FragmentActivity activity) {
         Bundle mediaStoreArgs = new Bundle();
         mediaStoreArgs.putBoolean(FilePickerConst.EXTRA_SHOW_GIF, false);
@@ -105,7 +111,7 @@ public class PhotoDisplayView extends RecyclerView {
     }
 
     private void dealPhotoGroup(ArrayList<Photo> files) {
-        Observable.from(files)
+        subscribe = Observable.from(files)
                 .groupBy(new Func1<Photo, String>() {
                     @Override
                     public String call(Photo photo) {
@@ -150,6 +156,14 @@ public class PhotoDisplayView extends RecyclerView {
                 });
 
 
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        if (subscribe != null && !subscribe.isUnsubscribed()) {
+            subscribe.unsubscribe();
+        }
     }
 
     public void setupPhotos(ArrayList<Photo> photos) {
