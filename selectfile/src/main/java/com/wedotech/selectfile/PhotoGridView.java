@@ -39,7 +39,7 @@ public class PhotoGridView extends RecyclerView {
 
 
     private void setupState() {
-        setLayoutManager(new GridLayoutManager(getContext(), 3));
+        setLayoutManager(new GridLayoutManager(getContext(), 4));
         photoArr = new ArrayList<>(10);
         adapter = new PhotoSelectedGridAdapter(photoArr);
         setAdapter(adapter);
