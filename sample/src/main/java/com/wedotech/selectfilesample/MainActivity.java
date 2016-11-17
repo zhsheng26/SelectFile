@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         albumView.setOnSelectDirListener(new OnSelectDirListener() {
             @Override
             public void onSelectDir(List<Photo> photos) {
-                startActivity(new Intent(MainActivity.this, ScissorActivity.class));
+                startActivity(new Intent(MainActivity.this, GridActivity.class));
             }
         });
     }

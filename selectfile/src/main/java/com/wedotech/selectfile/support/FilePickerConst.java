@@ -11,6 +11,7 @@ public class FilePickerConst {
     public final static int PHOTO_PICKER = 0x11;
     public final static int DOC_PICKER = 0x12;
     public final static int TITLE_HEADER = 0x13;
+    public final static int TITLE_ADD = 0x14;
 
     public final static String KEY_SELECTED_PHOTOS = "SELECTED_PHOTOS";
     public final static String KEY_SELECTED_DOCS = "SELECTED_DOCS";
