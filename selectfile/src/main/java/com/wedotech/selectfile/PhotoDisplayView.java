@@ -94,6 +94,10 @@ public class PhotoDisplayView extends RecyclerView {
         if (adapter != null) adapter.setMaxCount(maxCount);
     }
 
+    public void putSelectedPhotos(ArrayList<Photo> photos) {
+        if (adapter != null) adapter.putSelectedPhotos(photos);
+    }
+
     public void showAllPhoto(FragmentActivity activity) {
         Bundle mediaStoreArgs = new Bundle();
         mediaStoreArgs.putBoolean(FilePickerConst.EXTRA_SHOW_GIF, false);

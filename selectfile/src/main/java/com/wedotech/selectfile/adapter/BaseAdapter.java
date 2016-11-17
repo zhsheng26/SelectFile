@@ -35,6 +35,12 @@ public abstract class BaseAdapter extends RecyclerView.Adapter {
         this.maxCount = maxCount;
     }
 
+    public void putSelectedPhotos(ArrayList<Photo> photos) {
+        if (photos != null && photos.size() > 0) {
+            selectedPhotos.addAll(photos);
+        }
+    }
+
     public ArrayList<Photo> getSelectedPhotos() {
         return selectedPhotos;
     }
