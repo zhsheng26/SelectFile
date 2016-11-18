@@ -7,7 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.wedotech.selectfile.PhotoPreView;
+import com.wedotech.selectfile.PhotoPreViewPager;
 import com.wedotech.selectfile.models.Photo;
 
 import java.util.ArrayList;
@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class PreViewActivity extends AppCompatActivity {
 
-    private PhotoPreView photoPreView;
+    private PhotoPreViewPager photoPreView;
 
     public static void start(Context context, ArrayList<Photo> photos) {
         Intent starter = new Intent(context, PreViewActivity.class);
@@ -29,7 +29,7 @@ public class PreViewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        photoPreView = new PhotoPreView(this);
+        photoPreView = new PhotoPreViewPager(this);
         setContentView(photoPreView);
         photoPreView.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

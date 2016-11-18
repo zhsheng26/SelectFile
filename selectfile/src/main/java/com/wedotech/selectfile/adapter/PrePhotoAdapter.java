@@ -1,15 +1,14 @@
 package com.wedotech.selectfile.adapter;
 
-import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.wedotech.selectfile.R;
 import com.wedotech.selectfile.models.Photo;
-import com.wedotech.selectfile.preview.view.BigImageView;
-import com.wedotech.selectfile.preview.view.ProgressPieIndicator;
 
 import java.util.ArrayList;
 
@@ -27,14 +26,12 @@ public class PrePhotoAdapter extends PagerAdapter {
     @Override
     public View instantiateItem(ViewGroup container, int position) {
         View view = LayoutInflater.from(container.getContext()).inflate(R.layout.item_pic_view, null);
-        BigImageView imgView = (BigImageView) view.findViewById(R.id.photo_view_pic);
-       /* Glide.with(view.getContext())
+        ImageView imgView = (ImageView) view.findViewById(R.id.photo_view_pic);
+        Glide.with(view.getContext())
                 .load(photos.get(position).getPath())
                 .thumbnail(0.1f)
                 .fitCenter()
-                .into(imgView);*/
-        imgView.setProgressIndicator(new ProgressPieIndicator());
-        imgView.showImage(Uri.parse(photos.get(position).getPath()));
+                .into(imgView);
         container.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         return view;
     }
