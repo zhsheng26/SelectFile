@@ -2,6 +2,7 @@ package com.wedotech.selectfilesample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.wedotech.selectfile.PhotoDisplayView;
 import com.wedotech.selectfile.PhotoGridView;
@@ -25,6 +26,12 @@ public class GridActivity extends AppCompatActivity {
             @Override
             public void photoSelected(BaseFile photo, int selectedCount) {
                 gridView.addPhoto((Photo) photo);
+            }
+        });
+        findViewById(R.id.btn_start_pre).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PreViewActivity.start(GridActivity.this, gridView.getSelectedPhoto());
             }
         });
     }

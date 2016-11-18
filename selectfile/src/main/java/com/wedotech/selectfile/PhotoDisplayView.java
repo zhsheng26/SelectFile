@@ -20,17 +20,20 @@ import com.wedotech.selectfile.support.FilePickerConst;
 import com.wedotech.selectfile.support.MediaStoreHelper;
 import com.wedotech.selectfile.support.OnPhotoSelectedListener;
 
+import org.reactivestreams.Subscription;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.functions.Func2;
-import rx.observables.GroupedObservable;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.observables.GroupedObservable;
+import io.reactivex.observers.DefaultObserver;
+import io.reactivex.schedulers.Schedulers;
+
 
 /**
  * Created by zhsheng on 2016/11/5.
@@ -114,24 +117,24 @@ public class PhotoDisplayView extends RecyclerView {
     }
 
     private void dealPhotoGroup(ArrayList<Photo> files) {
-        subscribe = Observable.from(files)
-                .groupBy(new Func1<Photo, String>() {
+        Observable.fromIterable(files)
+                .groupBy(new Function<Photo, String>() {
                     @Override
-                    public String call(Photo photo) {
+                    public String apply(Photo photo) throws Exception {
                         return photo.getTitle();
                     }
                 })
-                .flatMap(new Func1<GroupedObservable<String, Photo>, Observable<List<Photo>>>() {
+                .flatMap(new Function<GroupedObservable<String, Photo>, ObservableSource<List<Photo>>>() {
                     @Override
-                    public Observable<List<Photo>> call(GroupedObservable<String, Photo> longPhotoGroupedObservable) {
-                        return longPhotoGroupedObservable.toList();
+                    public ObservableSource<List<Photo>> apply(GroupedObservable<String, Photo> stringPhotoGroupedObservable) throws Exception {
+                        return stringPhotoGroupedObservable.toList().toObservable();
                     }
                 })
-                .sorted(new Func2<List<Photo>, List<Photo>, Integer>() {
+                .sorted(new Comparator<List<Photo>>() {
                     @Override
-                    public Integer call(List<Photo> photos, List<Photo> photos2) {
+                    public int compare(List<Photo> photos, List<Photo> t1) {
                         Photo photo = photos.get(0);
-                        Photo photo1 = photos2.get(0);
+                        Photo photo1 = t1.get(0);
                         if (photo1.getDateTaken() > photo.getDateTaken()) {
                             return 1;
                         } else if (photo1.getDateTaken() == photo.getDateTaken()) {
@@ -141,9 +144,9 @@ public class PhotoDisplayView extends RecyclerView {
                         }
                     }
                 })
-                .map(new Func1<List<Photo>, List<Photo>>() {
+                .map(new Function<List<Photo>, List<Photo>>() {
                     @Override
-                    public List<Photo> call(List<Photo> photos) {
+                    public List<Photo> apply(List<Photo> photos) throws Exception {
                         photoList.add(new Photo(photos.get(0).getTitle()));
                         photoList.addAll(photos);
                         return photoList;
@@ -151,22 +154,22 @@ public class PhotoDisplayView extends RecyclerView {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<List<Photo>>() {
+                .subscribe(new DefaultObserver<List<Photo>>() {
                     @Override
-                    public void call(List<Photo> baseFiles) {
+                    public void onNext(List<Photo> value) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
                         adapter.notifyDataSetChanged();
                     }
                 });
-
-
-    }
-
-    @Override
-    protected void onDetachedFromWindow() {
-        super.onDetachedFromWindow();
-        if (subscribe != null && !subscribe.isUnsubscribed()) {
-            subscribe.unsubscribe();
-        }
     }
 
     public void setupPhotos(ArrayList<Photo> photos) {

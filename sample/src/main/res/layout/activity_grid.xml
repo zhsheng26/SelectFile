@@ -7,6 +7,12 @@
     android:orientation="vertical"
     tools:context="com.wedotech.selectfilesample.GridActivity">
 
+    <Button
+        android:id="@+id/btn_start_pre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="预览" />
+
     <com.wedotech.selectfile.PhotoDisplayView
         android:id="@+id/displayView"
         android:layout_width="match_parent"
